@@ -4,7 +4,8 @@ sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 // method to send the verification mail when someone wants to subscribe
 exports.verificationMail = function (reciever, id) {
   const html = `
-  <a href="http://127.0.0.1:3000/api/v1/verify/${id}">click here to verify </a>
+  <h2>Please verify to get daily updates and news feed </h2>
+  <a href="http://127.0.0.1:3000/api/v1/verify/${id}">verify </a>
   `;
   const verificationMsg = {
     to: reciever,
@@ -13,17 +14,37 @@ exports.verificationMail = function (reciever, id) {
     text: "this is text field",
     html: html,
   };
-  sgMail.send(verificationMsg);
+
+  sgMail.send(verificationMsg).then(
+    () => {},
+    (error) => {
+      console.error(error);
+
+      if (error.response) {
+        console.error(error.response.body);
+      }
+    }
+  );
 };
 
 // method to send newsletter to all the verified subscribers
-exports.sendToAll = function (recievers) {
+exports.sendToAll = function (content, recievers) {
   const msg = {
     to: recievers,
     from: "kannudivyamextra2@gmail.com",
-    subject: "newsletter",
+    subject: content.subject,
     text: "Random newsletter",
-    html: "<h1>Topic header</h1>",
+    html: content.body,
   };
-  sgMail.sendMultiple(msg);
+
+  sgMail.sendMultiple(msg).then(
+    () => {},
+    (error) => {
+      console.error(error);
+
+      if (error.response) {
+        console.error(error.response.body);
+      }
+    }
+  );
 };

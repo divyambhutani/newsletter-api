@@ -2,7 +2,6 @@ const express = require("express");
 const User = require("../models/user");
 const mail = require("../utils/mail");
 const crypt = require("../utils/crypt");
-const app = express();
 
 const router = express.Router();
 
@@ -45,7 +44,5 @@ router.get("/api/v1/verify/:id", async function (req, res) {
     message: "User verified successfully",
   });
 });
-
-// TODO: create a route for sender or admin to generate the newsletter contents and send to all subscribers
 
 module.exports = router;

@@ -1,5 +1,6 @@
 const express = require("express");
 const userRouter = require("./router/userRoute");
+const adminRouter = require("./router/adminRoute");
 
 const app = express();
 
@@ -10,6 +11,7 @@ app.use(express.json());
 
 // ROUTES
 app.use(userRouter);
+app.use(adminRouter);
 
 // START SERVER
 app.listen(port, () => {});
